@@ -28,9 +28,10 @@ domain = st.sidebar.text_input("which domain", value='imgur.com')
 reddit_url = 'https://redd.it/'
 reddit = Reddit()
 if mode == 'subr':
-    st.title(f'Top 100 in subreddit {subr}, {time_filter}')
+    this_subr = subr if custom_subr == 'null' else custom_subr
+    st.title(f'Top 100 in subreddit {this_subr}, {time_filter}')
     submissions = reddit.top_k_in_subreddit(
-        subr if custom_subr == 'null' else custom_subr,
+        this_subr,
         time_filter=time_filter
     )
 elif mode == 'domain':
