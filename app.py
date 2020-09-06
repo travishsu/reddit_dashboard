@@ -9,23 +9,23 @@ mode = st.sidebar.radio(
     ("domain", "subr")
 )
 subr = st.sidebar.selectbox(
-    "Which subreddit?",
+    "which subreddit?",
     subscribed_subrs
 )
 
 custom_subr = st.sidebar.text_input(
-    "New subreddit?",
+    "new subreddit?",
     value='null'
 )
 
 time_filter = st.sidebar.selectbox(
-    "Time range",
+    "time range",
     ("day", "week", "month", "all")
 )
 
-domain = st.sidebar.text_input("Domain", value='imgur.com')
+domain = st.sidebar.text_input("which domain", value='imgur.com')
 
-reddit_url = 'https://reddit.com'
+reddit_url = 'https://redd.it/'
 reddit = Reddit()
 if mode == 'subr':
     submissions = reddit.top_k_in_subreddit(
@@ -38,7 +38,7 @@ elif mode == 'domain':
         time_filter=time_filter
     )
 
-records = [(s.score, s.title, s.permalink) for s in submissions]
+records = [(s.score, s.title, s.id) for s in submissions]
 df = pd.DataFrame(records, columns=['score', 'title', 'permalink'])
 df = df.assign(permalink=reddit_url+df.permalink)
 df = df.sort_values(by='score', ascending=False)
